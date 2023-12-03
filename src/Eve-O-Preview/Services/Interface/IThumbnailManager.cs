@@ -7,5 +7,6 @@
 
 		void UpdateThumbnailsSize();
 		void UpdateThumbnailFrames();
+		void UpdateThumbailsLocation();
 	}
 }

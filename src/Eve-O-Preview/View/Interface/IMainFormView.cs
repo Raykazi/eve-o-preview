@@ -22,8 +22,9 @@ namespace EveOPreview.View
 		bool EnablePerClientThumbnailLayouts { get; set; }
 
 		Size ThumbnailSize { get; set; }
+        Point ThumbnailStartLocation { get; set; }
 
-		bool EnableThumbnailZoom { get; set; }
+        bool EnableThumbnailZoom { get; set; }
 		int ThumbnailZoomFactor { get; set; }
 		ViewZoomAnchor ThumbnailZoomAnchor { get; set; }
 
@@ -49,7 +50,8 @@ namespace EveOPreview.View
 		Action<ViewCloseRequest> FormCloseRequested { get; set; }
 		Action ApplicationSettingsChanged { get; set; }
 		Action ThumbnailsSizeChanged { get; set; }
-		Action<string> ThumbnailStateChanged { get; set; }
+        Action ThumbnailsLocationChanged { get; set; }
+        Action<string> ThumbnailStateChanged { get; set; }
 		Action DocumentationLinkActivated { get; set; }
 	}
 }

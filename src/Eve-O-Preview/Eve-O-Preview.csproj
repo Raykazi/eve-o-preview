@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EveOPreview</RootNamespace>
     <AssemblyName>EVE-O Preview</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
@@ -114,9 +114,11 @@
     <Compile Include="Configuration\Interface\IThumbnailConfiguration.cs" />
     <Compile Include="Configuration\Interface\ZoomAnchor.cs" />
     <Compile Include="Mediator\Handlers\Configuration\SaveConfigurationHandler.cs" />
+    <Compile Include="Mediator\Handlers\Thumbnails\ThumbnailConfiguredLocationUpdatedHandler.cs" />
     <Compile Include="Mediator\Handlers\Thumbnails\ThumbnailFrameSettingsUpdatedHandler.cs" />
     <Compile Include="Mediator\Handlers\Thumbnails\ThumbnailConfiguredSizeUpdatedHandler.cs" />
     <Compile Include="Mediator\Handlers\Thumbnails\ThumbnailListUpdatedHandler.cs" />
+    <Compile Include="Mediator\Messages\Thumbnails\ThumbnailConfiguredLocationUpdated.cs" />
     <Compile Include="Mediator\Messages\Thumbnails\ThumbnailFrameSettingsUpdated.cs" />
     <Compile Include="Mediator\Messages\Thumbnails\ThumbnailConfiguredSizeUpdated.cs" />
     <Compile Include="Mediator\Messages\Thumbnails\ThumbnailListUpdated.cs" />

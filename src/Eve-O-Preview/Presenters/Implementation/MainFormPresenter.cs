@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using EveOPreview.Configuration;
 using EveOPreview.Mediator.Messages;
+using EveOPreview.Mediator.Messages.Thumbnails;
 using EveOPreview.View;
 using MediatR;
 
@@ -42,6 +43,7 @@ namespace EveOPreview.Presenters
 			this.View.FormCloseRequested = this.Close;
 			this.View.ApplicationSettingsChanged = this.SaveApplicationSettings;
 			this.View.ThumbnailsSizeChanged = this.UpdateThumbnailsSize;
+			this.View.ThumbnailsLocationChanged = this.UpdateThumbnailsLocation;
 			this.View.ThumbnailStateChanged = this.UpdateThumbnailState;
 			this.View.DocumentationLinkActivated = this.OpenDocumentationLink;
 			this.View.ApplicationExitRequested = this.ExitApplication;
@@ -94,9 +96,18 @@ namespace EveOPreview.Presenters
 				this.SaveApplicationSettings();
 				await this._mediator.Publish(new ThumbnailConfiguredSizeUpdated());
 			}
-		}
+        }
 
-		private void LoadApplicationSettings()
+        private async void UpdateThumbnailsLocation()
+        {
+            if (!this._suppressSizeNotifications)
+            {
+                this.SaveApplicationSettings();
+                await this._mediator.Publish(new ThumbnailConfiguredLocationUpdated());
+            }
+        }
+
+        private void LoadApplicationSettings()
 		{
 			this._configurationStorage.Load();
 
@@ -113,6 +124,7 @@ namespace EveOPreview.Presenters
 
 			this.View.SetThumbnailSizeLimitations(this._configuration.ThumbnailMinimumSize, this._configuration.ThumbnailMaximumSize);
 			this.View.ThumbnailSize = this._configuration.ThumbnailSize;
+			this.View.ThumbnailStartLocation = this._configuration.ThumbnailStartLocation;
 
 			this.View.EnableThumbnailZoom = this._configuration.ThumbnailZoomEnabled;
 			this.View.ThumbnailZoomFactor = this._configuration.ThumbnailZoomFactor;
@@ -138,8 +150,9 @@ namespace EveOPreview.Presenters
 			this._configuration.EnablePerClientThumbnailLayouts = this.View.EnablePerClientThumbnailLayouts;
 
 			this._configuration.ThumbnailSize = this.View.ThumbnailSize;
+            this._configuration.ThumbnailStartLocation = this.View.ThumbnailStartLocation;
 
-			this._configuration.ThumbnailZoomEnabled = this.View.EnableThumbnailZoom;
+            this._configuration.ThumbnailZoomEnabled = this.View.EnableThumbnailZoom;
 			this._configuration.ThumbnailZoomFactor = this.View.ThumbnailZoomFactor;
 			this._configuration.ThumbnailZoomAnchor = ViewZoomAnchorConverter.Convert(this.View.ThumbnailZoomAnchor);
 

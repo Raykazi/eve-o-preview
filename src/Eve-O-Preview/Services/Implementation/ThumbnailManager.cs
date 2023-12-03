@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using EveOPreview.Configuration;
@@ -326,6 +327,22 @@ namespace EveOPreview.Services
 		{
 			this.SetThumbnailsSize(this._configuration.ThumbnailSize);
 		}
+		public void UpdateThumbailsLocation()
+		{
+			this.SetThumbnailsLocation(this._configuration.ThumbnailStartLocation);
+		}
+
+		private void SetThumbnailsLocation(Point location)
+        {
+            this.DisableViewEvents();
+            foreach (KeyValuePair<IntPtr, IThumbnailView> entry in this._thumbnailViews.Where(v=>v.Value.Title == DEFAULT_CLIENT_TITLE))
+			{
+				//if (entry.Value.Title != ThumbnailManager.DEFAULT_CLIENT_TITLE) continue;
+                entry.Value.ThumbnailLocation = location;
+                entry.Value.Refresh(false);
+            }
+            this.EnableViewEvents();
+        }
 
 		private void SetThumbnailsSize(Size size)
 		{

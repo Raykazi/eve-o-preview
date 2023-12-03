@@ -101,9 +101,28 @@ namespace EveOPreview.View
 				this.ThumbnailsWidthNumericEdit.Value = value.Width;
 				this.ThumbnailsHeightNumericEdit.Value = value.Height;
 			}
+        }
+        public Point ThumbnailStartLocation 
+		{
+			get => new Point(ThumbnailX, ThumbnailY);
+			set 
+			{
+				ThumbnailX = value.X;
+				ThumbnailY = value.Y;
+			}
+        }
+		public int ThumbnailX
+		{
+			get => (int)this.nudX.Value;
+			set => this.nudX.Value = value;
+		}
+		public int ThumbnailY
+		{
+			get => (int)this.nudY.Value;
+			set => this.nudY.Value = value;
 		}
 
-		public bool EnableThumbnailZoom
+        public bool EnableThumbnailZoom
 		{
 			get => this.EnableThumbnailZoomCheckBox.Checked;
 			set
@@ -257,6 +276,7 @@ namespace EveOPreview.View
 		public Action<string> ThumbnailStateChanged { get; set; }
 
 		public Action DocumentationLinkActivated { get; set; }
+		public Action ThumbnailsLocationChanged { get; set; }
 
 		#region UI events
 		private void ContentTabControl_DrawItem(object sender, DrawItemEventArgs e)
@@ -310,9 +330,22 @@ namespace EveOPreview.View
 			this._suppressEvents = false;
 
 			this.ThumbnailsSizeChanged?.Invoke();
-		}
+        }
 
-		private void ActiveClientHighlightColorButton_Click(object sender, EventArgs e)
+        private void StartLocationChanged_Handler(object sender, EventArgs e)
+        {
+            if (this._suppressEvents)
+            {
+                return;
+            }
+            this._suppressEvents = true;
+            //this.ThumbnailStartLocation;
+            this._suppressEvents = false;
+			this.ThumbnailsLocationChanged?.Invoke();
+
+        }
+
+        private void ActiveClientHighlightColorButton_Click(object sender, EventArgs e)
 		{
 			using (ColorDialog dialog = new ColorDialog())
 			{
